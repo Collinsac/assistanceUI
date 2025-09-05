@@ -1,75 +1,117 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { View, Text, Image, ScrollView } from "react-native";
+import React from "react";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
+import "../../global.css";
+import Profile from "../../assets/images/pro.jpg";
+import Arc from "@/components/Arc";
+import { Link } from "expo-router";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-
-export default function HomeScreen() {
+const index = () => {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
-  );
-}
+    <ScrollView className="flex-1 bg-[#e8ede9]">
+      <View className=" flex-1">
+        <View
+          className="bg-[#d7dee8] rounded-b-3xl pt-14 pb-8"
+          style={{ paddingHorizontal: 20 }}
+        >
+          <View className="flex-row justify-between items-center mb-10">
+            <Ionicons name="grid-outline" size={24} color="black" />
+            <Text className="font-semibold text-lg">Climate Control</Text>
+            <AntDesign name="close" size={20} />
+          </View>
 
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
+          {/* graphics container */}
+
+          <Arc />
+
+          <View className="mt-20 flex-row justify-between items-center">
+            <Text className="w-8/12">
+              All suggests you to turn on the automatic climate control
+            </Text>
+            <View className="bg-gray-200 w-[100px] h-[50px] rounded-full">
+              <View className="bg-[#bbc2f9] w-[50px] h-[50px] rounded-full justify-center items-center translate-x-[50px]">
+                <Text>On</Text>
+              </View>
+            </View>
+          </View>
+        </View>
+
+        <Text className="text-center my-4 font-semibold text-base">
+          Your Feed
+        </Text>
+
+        <View className="px-3">
+          <View className="p-5 bg-[#ccddca] rounded-3xl">
+            <View className="flex-row items-center gap-1 border-b pb-2">
+              <Text className="font-semibold text-lg">Messages</Text>
+              <Text className="ml-auto font-semibold text-xs">View all</Text>
+              {/*  */}
+              <AntDesign name="right" size={10} />
+            </View>
+
+            <View className="my-4 flex-row items-center gap-3">
+              <Image source={Profile} className="w-12 h-12 rounded-full" />
+              <View>
+                <Text className="font-semibold text-base ">Agu Collins</Text>
+                <Text>vino_costa</Text>
+              </View>
+              <Text className="ml-auto self-start font-light">Monday</Text>
+            </View>
+
+            <Text className="leading-5 font-light">
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Pariatur
+              recusandae cum odio impedit vitae suscipit ut dolorum! Dolorum
+              excepturi est culpa provident quaerat veritatis,
+            </Text>
+
+            <View className="flex-row items-center justify-between mt-4">
+              <View className="flex-row items-center gap-1">
+                <View className="h-2 w-2 rounded-full border bg-black" />
+                <View className="h-2 w-2 rounded-full border" />
+                <View className="h-2 w-2 rounded-full border" />
+              </View>
+
+              <Text>1/3</Text>
+            </View>
+          </View>
+          {/*  */}
+          <View className="p-5 bg-[#d7dee8] mt-4 rounded-3xl">
+            <View className="flex-row items-center gap-1 border-b pb-2">
+              <Text className="font-semibold text-lg">Security</Text>
+              <Text className="ml-auto font-semibold text-xs">View all</Text>
+              {/*  */}
+              <AntDesign name="right" size={10} />
+            </View>
+
+            <View className="my-4 flex-row items-center gap-3">
+              <Image source={Profile} className="w-12 h-12 rounded-full" />
+              <View>
+                <Text className="font-semibold text-base ">Agu Collins</Text>
+                <Text>vino_costa</Text>
+              </View>
+              <Text className="ml-auto self-start font-light">Monday</Text>
+            </View>
+
+            <Text className="leading-5 font-light">
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Pariatur
+              recusandae cum odio impedit vitae suscipit ut dolorum! Dolorum
+              excepturi est culpa provident quaerat veritatis,
+            </Text>
+
+            <View className="flex-row items-center justify-between mt-4">
+              <View className="flex-row items-center gap-1">
+                <View className="h-2 w-2 rounded-full border bg-black" />
+                <View className="h-2 w-2 rounded-full border" />
+                <View className="h-2 w-2 rounded-full border" />
+              </View>
+
+              <Text>1/3</Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </ScrollView>
+  );
+};
+
+export default index;
