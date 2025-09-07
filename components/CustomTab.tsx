@@ -1,8 +1,15 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity, Dimensions } from "react-native";
 import React from "react";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
-import { Entypo, AntDesign } from "@expo/vector-icons";
-import { IconProps } from "@expo/vector-icons/build/createIconSet";
+import { AntDesign } from "@expo/vector-icons";
+import Animated, {
+  useAnimatedGestureHandler,
+  useSharedValue,
+  useAnimatedStyle,
+  withDecay,
+} from "react-native-reanimated";
+import { PanGestureHandler } from "react-native-gesture-handler";
+const { width } = Dimensions.get("window");
 
 const CustomTab = (props: BottomTabBarProps) => {
   type Route = {
@@ -91,12 +98,46 @@ const CustomTab = (props: BottomTabBarProps) => {
     </TouchableOpacity>
   );
 
+
+  // --- Rotation logic ---
+  const rotation = useSharedValue(0);
+  const centerX = width / 2; // screen center X (for angle calc)
+  const radius = 100; // roughly half of 205px container
+
+  const gestureHandler = useAnimatedGestureHandler({
+    onStart: (_, ctx: any) => {
+      ctx.startRotation = rotation.value;
+    },
+    onActive: (event, ctx: any) => {
+      // Get angle from center
+      const dx = event.x - centerX;
+      const dy = event.y - radius; // since the circle is drawn above tab
+      const angle = Math.atan2(dy, dx);
+
+      rotation.value = ctx.startRotation + angle;
+    },
+    onEnd: (event) => {
+      // Add inertia (optional)
+      rotation.value = withDecay({ velocity: event.velocityX / 100 });
+    },
+  });
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ rotate: `${rotation.value}rad` }],
+    };
+  });
+
   return (
     <View className="relative">
       <View className="absolute h-[205px] w-[205px] bg-gray-200/80 bottom-full translate-y-1/3 rounded-full left-1/2 -translate-x-1/2">
-        {RouteData.map((route) => (
-          <RouteContainer key={route.id} {...route} />
-        ))}
+      <PanGestureHandler onGestureEvent={gestureHandler}>
+        <Animated.View className="relative h-full w-full"  style={animatedStyle}>
+          {RouteData.map((route) => (
+            <RouteContainer key={route.id} {...route} />
+          ))}
+        </Animated.View>
+        </PanGestureHandler>
       </View>
     </View>
   );
